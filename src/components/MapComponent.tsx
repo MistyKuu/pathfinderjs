@@ -59,6 +59,7 @@ const MapContent = ({ locations, route }: MapProps) => {
 };
 
 export const MapComponent = ({ locations, route }: MapProps) => {
+  console.log("test");
   return (
     <MapContainer
       center={[51.505, -0.09]} // Default center (will be overridden by bounds)
