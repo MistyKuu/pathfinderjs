@@ -18,4 +18,9 @@ body {
   background: none;
   border: none;
   box-shadow: none;
+  white-space: nowrap;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
 }

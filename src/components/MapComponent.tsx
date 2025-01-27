@@ -7,9 +7,10 @@ import 'leaflet/dist/leaflet.css';
 interface MapProps {
   locations: Location[];
   route: L.LatLngTuple[] | null;
+  totalDistance: number | null;
 }
 
-const MapContent = ({ locations, route }: MapProps) => {
+const MapContent = ({ locations, route, totalDistance }: MapProps) => {
   const map = useMap();
 
   useEffect(() => {
@@ -100,11 +101,34 @@ const MapContent = ({ locations, route }: MapProps) => {
         weight={4}
         opacity={0.8}
       />}
+
+      {totalDistance !== null && (
+        <div className="leaflet-top leaflet-right">
+          <div className="leaflet-control leaflet-bar" 
+            style={{ 
+              padding: '10px 15px',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+              margin: '10px',
+              borderRadius: '8px',
+              fontSize: '14px'
+            }}>
+            <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>
+              Route Distance
+            </div>
+            <div>
+              {totalDistance >= 1000 
+                ? `${(totalDistance / 1000).toFixed(2)} kilometers`
+                : `${Math.round(totalDistance)} meters`}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export const MapComponent = ({ locations, route }: MapProps) => {
+export const MapComponent = ({ locations, route, totalDistance }: MapProps) => {
   return (
     <MapContainer
       center={[51.505, -0.09]}
@@ -112,7 +136,7 @@ export const MapComponent = ({ locations, route }: MapProps) => {
       style={{ height: '100vh', width: '100%' }}
       attributionControl={false}
     >
-      <MapContent locations={locations} route={route} />
+      <MapContent locations={locations} route={route} totalDistance={totalDistance} />
     </MapContainer>
   );
 };

@@ -3,6 +3,7 @@ import { Location } from '../types';
 
 interface LocationFormProps {
   locations: Location[];
+  totalDistance: number | null;
   onAddLocation: (location: Location) => void;
   onRemoveLocation: (index: number) => void;
   onCalculateRoute: () => void;
@@ -10,6 +11,7 @@ interface LocationFormProps {
 
 export const LocationForm = ({
   locations,
+  totalDistance,
   onAddLocation,
   onRemoveLocation,
   onCalculateRoute,
@@ -141,6 +143,25 @@ export const LocationForm = ({
         </div>
       </div>
 
+      {totalDistance !== null && (
+        <div style={{ 
+          margin: '15px 0',
+          padding: '15px',
+          backgroundColor: '#e9f5ff',
+          borderRadius: '8px',
+          textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '14px', color: '#666', marginBottom: '5px' }}>
+            Total Distance
+          </div>
+          <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#007bff' }}>
+            {totalDistance >= 1000 
+              ? `${(totalDistance / 1000).toFixed(2)} km`
+              : `${Math.round(totalDistance)} meters`}
+          </div>
+        </div>
+      )}
+
       <button 
         onClick={onCalculateRoute}
         disabled={locations.length < 2}
@@ -152,7 +173,8 @@ export const LocationForm = ({
           border: 'none',
           borderRadius: '4px',
           cursor: 'pointer',
-          fontSize: '16px'
+          fontSize: '16px',
+          marginTop: '15px'
         }}
       >
         {locations.length < 2 ? 'Add 2+ locations' : 'Calculate Route'}
